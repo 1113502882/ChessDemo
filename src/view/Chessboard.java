@@ -61,6 +61,10 @@ public class Chessboard extends JComponent {
         this.timeCounter = timeCounter;
     }
 
+    public void setGameOver(boolean gameOver) {
+        GameOver = gameOver;
+    }
+
     public void setWinnerLabel(JLabel winnerLabel) {
         this.WinnerLabel = winnerLabel;
     }
@@ -296,38 +300,38 @@ public class Chessboard extends JComponent {
 
 //已完成部分-----------------------------------------------------------------------------------------------------
     //一堆初始化
-    private void initRookOnBoard(int row, int col, ChessColor color) {
+void initRookOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new RookChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
 
-    private void initBishopOnBoard(int row, int col, ChessColor color) {
+    void initBishopOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new BishopChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
 
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
 
-    private void initPawnOnBoard(int row, int col, ChessColor color) {
+    void initPawnOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new PawnChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
 
-    private void initKnightOnBoard(int row, int col, ChessColor color) {
+    void initKnightOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new KnightChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
 
-    private void initQueenOnBoard(int row, int col, ChessColor color) {
+    void initQueenOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new QueenChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
 
-    private void initKingOnBoard(int row, int col, ChessColor color) {
+    void initKingOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new KingChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
@@ -390,17 +394,21 @@ public class Chessboard extends JComponent {
         if (chessData.get(8).charAt(0)=='b'){
             currentColor=ChessColor.BLACK;
             CurrentPlayerLabel.setText("Current Player: BLACK" );
+            repaint();
         }
         if (chessData.get(8).charAt(0)=='w'){
             currentColor=ChessColor.WHITE;
             CurrentPlayerLabel.setText("Current Player: WHITE" );
+            repaint();
         }
 
         if (chessData.get(chessData.size()-1).charAt(0) != 'w' && chessData.get(chessData.size()-1).charAt(0) != 'b'){
             currentPlayerError.setText("Error code : 103");
+
             for (int i = 0; i <chessData.size() ; i++) {
                 if (chessData.size() !=8 || chessData.get(i).length()!=8){
                     chessBoardError.setText("Error code : 101");
+
                 }
             }
             for (int i = 0; i < chessData.size(); i++) {
@@ -433,6 +441,7 @@ public class Chessboard extends JComponent {
 
                     }else{
                         chessError.setText("Error code : 102");
+
                     }
                 }
             }
@@ -441,6 +450,7 @@ public class Chessboard extends JComponent {
             for (int i = 0; i <chessData.size()-1 ; i++) {
                 if (chessData.size()-1 !=8 || chessData.get(i).length()!=8){
                     chessBoardError.setText("Error code : 101");
+
                 }
             }
             for (int i = 0; i < chessData.size()-1; i++) {
@@ -473,6 +483,7 @@ public class Chessboard extends JComponent {
 
                     }else{
                         chessError.setText("Error code : 102");
+
                     }
                 }
             }
