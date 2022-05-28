@@ -36,40 +36,6 @@ public class ChessGameFrame extends JFrame {
     public JLabel getCurrentPlayerLabel() {
         return CurrentPlayerLabel;
     }
-
-    public JLabel getWinnerLabel() {
-        return WinnerLabel;
-    }
-
-    public JLabel getChessBoardError() {
-        return chessBoardError;
-    }
-
-    public JLabel getChessError() {
-        return chessError;
-    }
-
-    public JLabel getCurrentPlayerError() {
-        return currentPlayerError;
-    }
-
-    public JLabel getFormatError() {
-        return formatError;
-    }
-
-    public JLabel getTimeCounter() {
-        return timeCounter;
-    }
-
-    public JButton getLoadButton() {
-        return loadButton;
-    }
-
-    public JButton getFileButton() {
-        return fileButton;
-    }
-
-
     Users player1 = new Users(123,"123",0,"LiShuai");
     Users player2 = new Users(456,"456",7,"LiuChunHong");
     Users player3 = new Users(789,"789",9,"linJiDong");
@@ -89,18 +55,16 @@ public class ChessGameFrame extends JFrame {
         addChessError();
         addChessBoardError();
         addCurrentPlayerError();
-        addCurrentPlayerLabel();
+//        addCurrentPlayerLabel();
         addFormatError();
-        addWinnerLabel();
-        addTimeLabel();
-        addChessboard();
-        addLeaderBoardButton();
-        addHelloButton();
-        addHuiQiButton();
-        addLoadButton();
-        addFileButton();
-
-
+//        addWinnerLabel();
+//        addTimeLabel();
+//        addChessboard();
+//        addLeaderBoardButton();
+//        addHelloButton();
+//        addHuiQiButton();
+//        addLoadButton();
+//        addFileButton();
         addPlayGame();
         repaint();
 
@@ -132,8 +96,9 @@ public class ChessGameFrame extends JFrame {
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
         gameController = new GameController(chessboard);
         add(chessboard);
-
     }
+
+
 
     public String[][] getInfoOfChessBoard (ChessComponent[][] chessComponents){
         String[][] chessComponentsForFile = new String[8][8];
@@ -252,62 +217,103 @@ public class ChessGameFrame extends JFrame {
 
 
 
+
+
+
+
+
+
     public void addPlayGame(){
+
         JButton button = new JButton("Play Game");
         button.setLocation(WIDTH/2-50, HEIGTH / 2);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-//        Image image = background2.getImage();
-//        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
-//        ImageIcon backgrounds = new ImageIcon(smallImage);
+        Image image = background2.getImage();
+        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
+        ImageIcon backgrounds = new ImageIcon(smallImage);
 
-//        JLabel jlabel = new JLabel(backgrounds);
-//        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
-//        add(jlabel);
+        JLabel jlabel = new JLabel(backgrounds);
+        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
+        add(jlabel);
 
         button.addActionListener(e -> {
-            String account = JOptionPane.showInputDialog(this, "Input your account here");
-            String key = JOptionPane.showInputDialog(this, "Input your key here");
-            if (account.equals(player1.getId()) && key.equals(player1.getKey())){
-                JOptionPane.showMessageDialog(this,"Success!");
-                player1.setPoints(player1.getPoints()+1);
-                setVisible(true);
-            }else  if (account.equals(player2.getId()) && key.equals(player2.getKey())){
-                JOptionPane.showMessageDialog(this,"Success!");
-                player2.setPoints(player2.getPoints()+1);
-                setVisible(true);
-            }else if (account.equals(player3.getId()) && key.equals(player3.getKey())){
-                JOptionPane.showMessageDialog(this,"Success!");
-                player3.setPoints(player3.getPoints()+1);
-                setVisible(true);
-            }
-            else {
-                JOptionPane.showMessageDialog(this,"Wrong account or key !");
-                setVisible(false);
-            }
+//            String id = JOptionPane.showInputDialog(this, "Input your id here");
+//            String key = JOptionPane.showInputDialog(this, "Input your key here");
+//            if (id.equals(player1.getId())  && key.equals(player1.getKey())){
+//                JOptionPane.showMessageDialog(this,"Success!");
+//                player1.setPoints(player1.getPoints()+1);
+//                setVisible(true);
+//            }else  if (id.equals(player2.getId()) && key.equals(player2.getKey())){
+//                JOptionPane.showMessageDialog(this,"Success!");
+//                player2.setPoints(player2.getPoints()+1);
+//                setVisible(true);
+//            }else if (id.equals(player3.getId()) && key.equals(player3.getKey())){
+//                JOptionPane.showMessageDialog(this,"Success!");
+//                player3.setPoints(player3.getPoints()+1);
+//                setVisible(true);
+//            }
+//            else {
+//                JOptionPane.showMessageDialog(this,"Wrong account or key !");
+//                setVisible(false);
+//            }
 
-//            jlabel.setVisible(false);
-//            Music.audioPlayWave.start();
+            jlabel.setVisible(false);
+            Music.audioPlayWave.start();
             @SuppressWarnings("unused")
             int musicOpenLab = 1;
             repaint();
             addCurrentPlayerLabel();
             addWinnerLabel();
             addChessboard();
-            addHelloButton();
+            addRestartButton();
             addLoadButton();
-//            addCloseMusicButton();
+            addCloseMusicButton();
             addFileButton();
-//            addBackground();
+            addTimeLabel();
+            addFormatError();
+            addLeaderBoardButton();
+            addChessError();
+            addChessBoardError();
+            addCurrentPlayerError();
+            addHuiQiButton();
+            addBackground();
             button.setVisible(false);
             repaint();
+        });
+    }
+    /**
+     * 关闭音乐
+     */
+    private void addCloseMusicButton(){
+        JButton button = new JButton("OFF");
+        button.setLocation(0,0);
+        button.setSize(200,60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            Music.audioPlayWave.stop();
+            @SuppressWarnings("unused")
+            int musicOpenLab = -1;
         });
     }
 
 
 
+    /**
+     * 添加背景图片
+     */
+    public void addBackground() {
+        Image image = background.getImage();
+        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
+        ImageIcon backgrounds = new ImageIcon(smallImage);
 
+        JLabel jlabel = new JLabel(backgrounds);
+        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
+        add(jlabel);
+    }
 
 
 
@@ -332,14 +338,61 @@ public class ChessGameFrame extends JFrame {
 //        setVisible(true);
 //
 //    }
-    private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+    private void addRestartButton() {
+        JButton button = new JButton("Restart Game!");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
+        button.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Restart Game!");
+
+            //初始化
+            gameController.getChessboard().initiateEmptyChessboard();
+            gameController.getChessboard().initRookOnBoard(0, 0, ChessColor.BLACK);
+            gameController.getChessboard().initRookOnBoard(0, 7, ChessColor.BLACK);
+            gameController.getChessboard().initRookOnBoard(7, 0, ChessColor.WHITE);
+            gameController.getChessboard().initRookOnBoard(7, 7, ChessColor.WHITE);
+            gameController.getChessboard().initQueenOnBoard(0, 3, ChessColor.BLACK);
+            gameController.getChessboard().initQueenOnBoard(7, 3, ChessColor.WHITE);
+            gameController.getChessboard().initKingOnBoard(0, 4, ChessColor.BLACK);
+            gameController.getChessboard().initKingOnBoard(7, 4, ChessColor.WHITE);
+            //初始化象
+            gameController.getChessboard().initBishopOnBoard(0, 2, ChessColor.BLACK);
+            gameController.getChessboard().initBishopOnBoard(0, 5, ChessColor.BLACK);
+            gameController.getChessboard().initBishopOnBoard(7, 2, ChessColor.WHITE);
+            gameController.getChessboard().initBishopOnBoard(7, 5, ChessColor.WHITE);
+            //初始化马
+            gameController.getChessboard().initKnightOnBoard(0, 1, ChessColor.BLACK);
+            gameController.getChessboard().initKnightOnBoard(0, 6, ChessColor.BLACK);
+            gameController.getChessboard().initKnightOnBoard(7, 1, ChessColor.WHITE);
+            gameController.getChessboard().initKnightOnBoard(7, 6, ChessColor.WHITE);
+            //初始化兵
+            gameController.getChessboard().initPawnOnBoard(1, 0, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 1, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 2, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 3, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 4, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 5, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 6, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(1, 7, ChessColor.BLACK);
+            gameController.getChessboard().initPawnOnBoard(6, 0, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 1, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 2, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 3, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 4, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 5, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 6, ChessColor.WHITE);
+            gameController.getChessboard().initPawnOnBoard(6, 7, ChessColor.WHITE);
+            gameController.getChessboard().setCurrentColor(ChessColor.WHITE);
+            CurrentPlayerLabel.setText("Current Player: WHITE");
+            WinnerLabel.setText("");
+            gameController.getChessboard().setGameOver(false);
+            gameController.getChessboard().repaint();
+        });
     }
+
     private void addLeaderBoardButton() {
         JButton button = new JButton("LeaderBoard");
         String LeaderBoard = player3.getId()+": " + player3.getPoints() +"\n" + player2.getId()+": " + player2.getPoints() +"\n"+ player1.getId()+": "+player1.getPoints();
@@ -375,14 +428,14 @@ public class ChessGameFrame extends JFrame {
             if (result == JFileChooser.APPROVE_OPTION){
                 File file = chooser.getSelectedFile();
                 gameController.loadGameFromFile(file.getAbsolutePath());
+                if (!file.getAbsoluteFile().getName().contains("txt")){
+                    formatError.setText("Error code : 104");
+                }
             }
 
-//            if (!path.contains("txt")){
-//                formatError.setText("Error code : 104");
-//            }
-//            gameController.loadGameFromFile(path);
+
+
         });
-//        this.loadButton = loadButton;
     }
 
 
@@ -425,33 +478,33 @@ public class ChessGameFrame extends JFrame {
 
             File file = null;
             FileWriter fw = null;
-                file = new File("D:/ChessDemo/resource/存档" + Counter + ".txt");
+            file = new File("D:/ChessDemo/resource/存档" + Counter + ".txt");
 
 
-                if (!file.exists()){
-                    try {
-                        file.createNewFile();
-                        fw = new FileWriter(file);
-                        for (int i = 0; i <8 ; i++) {
-                            for (int j = 0; j <8 ; j++) {
-                                fw.write(chessComponentsForFile[i][j]);
-                            }
-                            fw.write("\n");
-                            fw.flush();
+            if (!file.exists()){
+                try {
+                    file.createNewFile();
+                    fw = new FileWriter(file);
+                    for (int i = 0; i <8 ; i++) {
+                        for (int j = 0; j <8 ; j++) {
+                            fw.write(chessComponentsForFile[i][j]);
                         }
-                        if (gameController.getChessboard().getCurrentColor() == ChessColor.WHITE){
-                            fw.write("w");
-                            fw.flush();
-                        }else {
-                            fw.write("b");
-                            fw.flush();
-                        }
-                        Counter++;
-                        JOptionPane.showMessageDialog(this,"Success!");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+                        fw.write("\n");
+                        fw.flush();
                     }
+                    if (gameController.getChessboard().getCurrentColor() == ChessColor.WHITE){
+                        fw.write("w");
+                        fw.flush();
+                    }else {
+                        fw.write("b");
+                        fw.flush();
+                    }
+                    Counter++;
+                    JOptionPane.showMessageDialog(this,"Success!");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
+            }
         });
         this.fileButton = button;
     }
