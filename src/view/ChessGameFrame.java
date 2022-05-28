@@ -173,7 +173,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addChessBoardError() {
         chessBoardError = new JLabel("");
-        chessBoardError.setLocation(HEIGTH, HEIGTH / 12-15);
+        chessBoardError.setLocation(HEIGTH, HEIGTH / 12-5);
         chessBoardError.setSize(200, 60);
         chessBoardError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(chessBoardError);
@@ -181,7 +181,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addChessError() {
         chessError = new JLabel("");
-        chessError.setLocation(HEIGTH, HEIGTH / 12-30);
+        chessError.setLocation(HEIGTH, HEIGTH / 12-20);
         chessError.setSize(200, 60);
         chessError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(chessError);
@@ -189,21 +189,21 @@ public class ChessGameFrame extends JFrame {
 
     private void addCurrentPlayerError() {
         currentPlayerError= new JLabel("");
-        currentPlayerError.setLocation(HEIGTH, HEIGTH / 12-45);
+        currentPlayerError.setLocation(HEIGTH, HEIGTH / 12-35);
         currentPlayerError.setSize(200, 60);
         currentPlayerError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(currentPlayerError);
     }
     private void addFormatError() {
         formatError= new JLabel("");
-        formatError.setLocation(HEIGTH, HEIGTH / 12-60);
+        formatError.setLocation(HEIGTH, HEIGTH / 12-50);
         formatError.setSize(200, 60);
         formatError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(formatError);
     }
     private void addTimeLabel()  {
         timeCounter = new JLabel("With 20s left");
-        timeCounter.setLocation(HEIGTH,HEIGTH/12-75);
+        timeCounter.setLocation(HEIGTH,HEIGTH/12-90);
         timeCounter.setSize(300,100);
         timeCounter.setFont(new Font("Rockwell", Font.BOLD, 20));
         repaint();
@@ -278,6 +278,7 @@ public class ChessGameFrame extends JFrame {
             addFormatError();
             addLeaderBoardButton();
             addChessError();
+            addUpBian();
             addChessBoardError();
             addCurrentPlayerError();
             addHuiQiButton();
@@ -323,24 +324,24 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
-//    private void addUpBian() {
-//        JPanel upBian = new JPanel();
-//        upBian.setLayout(new GridLayout(2,2,10,10 ));
-//        JButton chooseQueen = new JButton("Queen");
-//        JButton chooseBishop = new JButton("Bishop");
-//        JButton chooseKnight = new JButton("Knight");
-//        JButton chooseRook = new JButton("Rook");
-//
-//        upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
-//        upBian.setSize(250,120);
-//        upBian.add(chooseQueen);
-//        upBian.add(chooseBishop);
-//        upBian.add(chooseKnight);
-//        upBian.add(chooseRook);
-//        add(upBian);
-//        setVisible(true);
-//
-//    }
+    private void addUpBian() {
+        JPanel upBian = new JPanel();
+        upBian.setLayout(new GridLayout(2,2,10,10 ));
+        JButton chooseQueen = new JButton("Queen");
+        JButton chooseBishop = new JButton("Bishop");
+        JButton chooseKnight = new JButton("Knight");
+        JButton chooseRook = new JButton("Rook");
+
+        upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
+        upBian.setSize(250,120);
+        upBian.add(chooseQueen);
+        upBian.add(chooseBishop);
+        upBian.add(chooseKnight);
+        upBian.add(chooseRook);
+        add(upBian);
+        setVisible(true);
+
+    }
     private void addRestartButton() {
         JButton button = new JButton("Restart Game!");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
@@ -418,7 +419,7 @@ public class ChessGameFrame extends JFrame {
             chooser.setCurrentDirectory(new File("."));
             chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             chooser.setMultiSelectionEnabled(false);
-            chooser.setFileFilter(new FileNameExtensionFilter("txt","txt"));
+            chooser.setFileFilter(new FileNameExtensionFilter("txt","txt","json"));
             int result = chooser.showOpenDialog(getParent());
             if (result == JFileChooser.APPROVE_OPTION){
                 File file = chooser.getSelectedFile();
