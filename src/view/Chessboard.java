@@ -391,16 +391,7 @@ void initRookOnBoard(int row, int col, ChessColor color) {
         }
 
         repaint();
-        if (chessData.get(8).charAt(0)=='b'){
-            currentColor=ChessColor.BLACK;
-            CurrentPlayerLabel.setText("Current Player: BLACK" );
-            repaint();
-        }
-        if (chessData.get(8).charAt(0)=='w'){
-            currentColor=ChessColor.WHITE;
-            CurrentPlayerLabel.setText("Current Player: WHITE" );
-            repaint();
-        }
+
 
         if (chessData.get(chessData.size()-1).charAt(0) != 'w' && chessData.get(chessData.size()-1).charAt(0) != 'b'){
             currentPlayerError.setText("Error code : 103");
@@ -487,6 +478,16 @@ void initRookOnBoard(int row, int col, ChessColor color) {
                     }
                 }
             }
+        }
+        if (chessData.get(8).charAt(0)=='b'){
+            currentColor=ChessColor.BLACK;
+            CurrentPlayerLabel.setText("Current Player: BLACK" );
+            repaint();
+        }
+        if (chessData.get(8).charAt(0)=='w'){
+            currentColor=ChessColor.WHITE;
+            CurrentPlayerLabel.setText("Current Player: WHITE" );
+            repaint();
         }
     }
 
