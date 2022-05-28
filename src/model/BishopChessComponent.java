@@ -5,6 +5,9 @@ import view.ChessboardPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,6 +15,7 @@ public class BishopChessComponent extends ChessComponent {
     private static Image BISHOP_WHITE;
     private static Image BISHOP_BLACK;
     private Image BishopImage;
+    private int in = 0 ;
 
 
 
@@ -45,9 +49,32 @@ public class BishopChessComponent extends ChessComponent {
         }
     }
 
+    public int getIn() {
+        return in;
+    }
+
+    public void setIn(int in) {
+        this.in = in;
+    }
+
     public BishopChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
         super(chessboardPoint, location, color, listener, size);
         initiateBishopImage(color);
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                in = 1;
+                repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                in = 0;
+                repaint();
+            }
+        });
     }
 
 
@@ -115,7 +142,13 @@ public class BishopChessComponent extends ChessComponent {
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
         }
+        if (in == 1 ){
+            g.setColor(Color.CYAN);
+            g.fillRect(0,0,this.getWidth(),this.getHeight());
+            g.drawImage(BishopImage, 0, 0, getWidth() , getHeight(), this);
+        }
     }
+
 
 
 }

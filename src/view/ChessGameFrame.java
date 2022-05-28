@@ -4,6 +4,7 @@ import controller.GameController;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -66,6 +67,10 @@ public class ChessGameFrame extends JFrame {
         return fileButton;
     }
 
+
+    Users player1 = new Users(123,"123",0,"p1");
+    Users player2 = new Users(456,"456",0,"p2");
+
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
         this.WIDTH = width;
@@ -90,6 +95,11 @@ public class ChessGameFrame extends JFrame {
         addHuiQiButton();
         addLoadButton();
         addFileButton();
+
+
+        addPlayGame();
+        repaint();
+
 
 //        if (PawnChessComponent.whiteUp || PawnChessComponent.blackUp){
 //            addUpBian();
@@ -237,6 +247,52 @@ public class ChessGameFrame extends JFrame {
 
 
 
+    public void addPlayGame(){
+        JButton button = new JButton("Play Game");
+        button.setLocation(WIDTH/2-50, HEIGTH / 2);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+//        Image image = background2.getImage();
+//        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
+//        ImageIcon backgrounds = new ImageIcon(smallImage);
+
+//        JLabel jlabel = new JLabel(backgrounds);
+//        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
+//        add(jlabel);
+
+        button.addActionListener(e -> {
+            String id = JOptionPane.showInputDialog(this, "Input your id here");
+            String key = JOptionPane.showInputDialog(this, "Input your key here");
+            if (id.equals(player1.getId()) && key.equals(player1.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                setVisible(true);
+            }else  if (id.equals(player2.getId()) && key.equals(player2.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                setVisible(true);
+            }else {
+                JOptionPane.showMessageDialog(this,"Wrong id or key !");
+                setVisible(false);
+            }
+
+//            jlabel.setVisible(false);
+//            Music.audioPlayWave.start();
+            @SuppressWarnings("unused")
+            int musicOpenLab = 1;
+            repaint();
+            addCurrentPlayerLabel();
+            addWinnerLabel();
+            addChessboard();
+            addHelloButton();
+            addLoadButton();
+//            addCloseMusicButton();
+            addFileButton();
+//            addBackground();
+            button.setVisible(false);
+            repaint();
+        });
+    }
+
 
 
 
@@ -288,13 +344,24 @@ public class ChessGameFrame extends JFrame {
 
         loadButton.addActionListener(e -> {
             System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            if (!path.contains("txt")){
-                formatError.setText("Error code : 104");
+//            String path = JOptionPane.showInputDialog(this, "Input Path here");
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File("."));
+            chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            chooser.setMultiSelectionEnabled(false);
+            chooser.setFileFilter(new FileNameExtensionFilter("txt","txt"));
+            int result = chooser.showOpenDialog(getParent());
+            if (result == JFileChooser.APPROVE_OPTION){
+                File file = chooser.getSelectedFile();
+                gameController.loadGameFromFile(file.getAbsolutePath());
             }
-            gameController.loadGameFromFile(path);
+
+//            if (!path.contains("txt")){
+//                formatError.setText("Error code : 104");
+//            }
+//            gameController.loadGameFromFile(path);
         });
-        this.loadButton = loadButton;
+//        this.loadButton = loadButton;
     }
     private void addHuiQiButton() {
 

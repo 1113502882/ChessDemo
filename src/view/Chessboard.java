@@ -300,6 +300,7 @@ public class Chessboard extends JComponent {
 
     private void initBishopOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new BishopChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
+
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
