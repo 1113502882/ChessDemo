@@ -191,6 +191,7 @@ public class ChessGameFrame extends JFrame {
         CurrentPlayerLabel.setSize(200, 60);
         CurrentPlayerLabel.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(CurrentPlayerLabel);
+        repaint();
     }
 
     private void addWinnerLabel() {
@@ -381,11 +382,22 @@ public class ChessGameFrame extends JFrame {
         });
 //        this.loadButton = loadButton;
     }
+
+
+
+    //悔棋
     private void addHuiQiButton() {
 
         JButton button = new JButton("Withdraw");
         button.addActionListener(e -> {
             gameController.loadGameFromHuiQi();
+            Chessboard.HuiQi.remove(Chessboard.HuiQi.size()-1);
+            if (Chessboard.currentColor == ChessColor.BLACK){
+                Chessboard.currentColor = ChessColor.WHITE;
+            }else {
+                Chessboard.currentColor = ChessColor.BLACK;
+            }
+            repaint();
         });
         button.setLocation(HEIGTH, HEIGTH / 10 + 480);
         button.setSize(200, 60);
@@ -394,6 +406,9 @@ public class ChessGameFrame extends JFrame {
     }
 
 
+
+
+    //存档按钮
     private void addFileButton() {
 
         JButton button = new JButton("FileGame");

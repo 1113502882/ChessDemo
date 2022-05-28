@@ -36,7 +36,7 @@ public class Chessboard extends JComponent {
     private boolean GameOver = false;
 
 
-    private ChessColor currentColor = ChessColor.WHITE;
+    public static ChessColor currentColor = ChessColor.WHITE;
     private JLabel CurrentPlayerLabel;
     private JLabel WinnerLabel;
     private JLabel chessBoardError;
@@ -134,6 +134,8 @@ public class Chessboard extends JComponent {
 
 
 
+
+
     public ChessComponent[][] getChessComponents() {
         return chessComponents;
     }
@@ -191,16 +193,18 @@ public class Chessboard extends JComponent {
 
     //更新当前行棋方
     public void swapColor() {
+
+        currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
+        CurrentPlayerLabel.setText("Current Player:" + currentColor.toString());
         ChessComponent[][] temp = new ChessComponent[chessComponents.length][chessComponents[0].length];
         for (int i = 0; i < chessComponents.length; i++) {
             for (int j = 0; j <chessComponents[0].length ; j++) {
                 temp[i][j] = chessComponents[i][j];
             }
         }
-        HuiQi.add(temp);
-        currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
-        CurrentPlayerLabel.setText("Current Player:" + currentColor.toString());
-
+        if (!HuiQi.contains(temp)){
+            HuiQi.add(temp);
+        }
         TimeCounter.time = 20;
 
         Click pilipala = new Click();
