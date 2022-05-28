@@ -30,6 +30,8 @@ public class ChessGameFrame extends JFrame {
     JPanel upBian;
     public Chessboard chessboard;
     int Counter = 0;
+    ImageIcon background = new ImageIcon("./images/3.jpg");
+    ImageIcon background2 = new ImageIcon("./images/QQ图片20220525115306.jpg");
 
     public JLabel getCurrentPlayerLabel() {
         return CurrentPlayerLabel;
