@@ -1,6 +1,7 @@
 package controller;
-import model.*;
+
 import view.Chessboard;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,11 +35,6 @@ public class GameController {
         chessboard.loadGame(chessDate);
         return chessDate;
     }
-
-
-
-
-
 
     public Chessboard getChessboard() {
         return chessboard;
