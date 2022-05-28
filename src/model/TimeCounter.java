@@ -9,22 +9,23 @@ public class TimeCounter implements Runnable{
     @Override
     public void run() {
         getTime();
-
     }
+
 
     public TimeCounter(ChessGameFrame chessGameFrame) {
         this.chessGameFrame = chessGameFrame;
     }
 
+
     ChessGameFrame chessGameFrame;
 
-    public static int time = 10;
+
+    public static int time = 20;
     public void getTime(){
         while (true){
-            Label timeCounter = new Label("10");
+            Label timeCounter = new Label("With 30s left");
             try {
                 Thread.sleep(1000);
-//                this.wait(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -40,6 +41,7 @@ public class TimeCounter implements Runnable{
 //               chessGameFrame.repaint();
                time = 10;
             }
+
 
             chessGameFrame.setTimer(--time);
         }
