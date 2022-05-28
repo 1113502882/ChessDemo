@@ -68,8 +68,10 @@ public class ChessGameFrame extends JFrame {
     }
 
 
-    Users player1 = new Users(123,"123",0,"p1");
-    Users player2 = new Users(456,"456",0,"p2");
+    Users player1 = new Users(123,"123",0,"LiShuai");
+    Users player2 = new Users(456,"456",7,"LiuChunHong");
+    Users player3 = new Users(789,"789",9,"linJiDong");
+
 
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
@@ -90,7 +92,7 @@ public class ChessGameFrame extends JFrame {
         addWinnerLabel();
         addTimeLabel();
         addChessboard();
-
+        addLeaderBoardButton();
         addHelloButton();
         addHuiQiButton();
         addLoadButton();
@@ -230,7 +232,7 @@ public class ChessGameFrame extends JFrame {
         add(formatError);
     }
     private void addTimeLabel()  {
-        timeCounter = new JLabel("10s");
+        timeCounter = new JLabel("With 20s left");
         timeCounter.setLocation(HEIGTH,HEIGTH/12-75);
         timeCounter.setSize(300,100);
         timeCounter.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -241,7 +243,7 @@ public class ChessGameFrame extends JFrame {
 
 
     public void setTimer(int i){
-        timeCounter.setText(i + "s");
+        timeCounter.setText("With "+i + "s left");
         repaint();
     }
 
@@ -262,16 +264,23 @@ public class ChessGameFrame extends JFrame {
 //        add(jlabel);
 
         button.addActionListener(e -> {
-            String id = JOptionPane.showInputDialog(this, "Input your id here");
+            String account = JOptionPane.showInputDialog(this, "Input your account here");
             String key = JOptionPane.showInputDialog(this, "Input your key here");
-            if (id.equals(player1.getId()) && key.equals(player1.getKey())){
+            if (account.equals(player1.getId()) && key.equals(player1.getKey())){
                 JOptionPane.showMessageDialog(this,"Success!");
+                player1.setPoints(player1.getPoints()+1);
                 setVisible(true);
-            }else  if (id.equals(player2.getId()) && key.equals(player2.getKey())){
+            }else  if (account.equals(player2.getId()) && key.equals(player2.getKey())){
                 JOptionPane.showMessageDialog(this,"Success!");
+                player2.setPoints(player2.getPoints()+1);
                 setVisible(true);
-            }else {
-                JOptionPane.showMessageDialog(this,"Wrong id or key !");
+            }else if (account.equals(player3.getId()) && key.equals(player3.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                player3.setPoints(player3.getPoints()+1);
+                setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this,"Wrong account or key !");
                 setVisible(false);
             }
 
@@ -324,6 +333,15 @@ public class ChessGameFrame extends JFrame {
         JButton button = new JButton("Show Hello Here");
         button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+    }
+    private void addLeaderBoardButton() {
+        JButton button = new JButton("LeaderBoard");
+        String LeaderBoard = player3.getId()+": " + player3.getPoints() +"\n" + player2.getId()+": " + player2.getPoints() +"\n"+ player1.getId()+": "+player1.getPoints();
+        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, LeaderBoard));
+        button.setLocation(HEIGTH, HEIGTH / 10 + 600);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);

@@ -39,7 +39,7 @@ public class TimeCounter implements Runnable{
                    chessGameFrame.chessboard.setCurrentColor(ChessColor.BLACK);
                }
 //               chessGameFrame.repaint();
-               time = 10;
+               time = 20;
             }
 
 

@@ -201,7 +201,7 @@ public class Chessboard extends JComponent {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         CurrentPlayerLabel.setText("Current Player:" + currentColor.toString());
 
-        TimeCounter.time = 10;
+        TimeCounter.time = 20;
 
         Click pilipala = new Click();
     }
