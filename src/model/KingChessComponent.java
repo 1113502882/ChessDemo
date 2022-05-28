@@ -5,6 +5,8 @@ import view.ChessboardPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,6 +17,9 @@ public class KingChessComponent extends ChessComponent {
     //王棋子对象自身的图片，是上面两种中的一种
     private Image kingImage;
 
+
+
+    private int in = 0;
     //读取加载后棋子的图片
     public void loadResource() throws IOException {
         if (KING_WHITE == null) {
@@ -42,6 +47,21 @@ public class KingChessComponent extends ChessComponent {
     public KingChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
         super(chessboardPoint, location, color, listener, size);
         initiateRookImage(color);
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                in = 1;
+                repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                in = 0;
+                repaint();
+            }
+        });
     }
 
     @Override
@@ -70,9 +90,16 @@ public class KingChessComponent extends ChessComponent {
 //        g.drawImage(rookImage, 0, 0, getWidth() - 13, getHeight() - 20, this);
         g.drawImage(kingImage, 0, 0, getWidth(), getHeight(), this);
         g.setColor(Color.BLACK);
+
+        if (in == 1 ){
+            g.setColor(Color.CYAN);
+            g.fillRect(0,0,this.getWidth(),this.getHeight());
+            g.drawImage(kingImage, 0, 0, getWidth() , getHeight(), this);
+        }
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth(), getHeight());
         }
+
     }
 }

@@ -138,14 +138,15 @@ public class BishopChessComponent extends ChessComponent {
 //        g.drawImage(rookImage, 0, 0, getWidth() - 13, getHeight() - 20, this);
         g.drawImage(BishopImage, 0, 0, getWidth() , getHeight(), this);
         g.setColor(Color.BLACK);
-        if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
-            g.drawOval(0, 0, getWidth() , getHeight());
-        }
+
         if (in == 1 ){
             g.setColor(Color.CYAN);
             g.fillRect(0,0,this.getWidth(),this.getHeight());
             g.drawImage(BishopImage, 0, 0, getWidth() , getHeight(), this);
+        }
+        if (isSelected()) { // Highlights the model if selected.
+            g.setColor(Color.RED);
+            g.drawOval(0, 0, getWidth() , getHeight());
         }
     }
 
