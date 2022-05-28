@@ -38,6 +38,10 @@ public class TimeCounter implements Runnable{
                    chessGameFrame.getCurrentPlayerLabel().setText("Current Player : BLACK");
                    chessGameFrame.chessboard.setCurrentColor(ChessColor.BLACK);
                }
+
+
+
+
 //               chessGameFrame.repaint();
                time = 20;
             }
