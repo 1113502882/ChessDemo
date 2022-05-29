@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
-    private final int WIDTH ;
+    private final int WIDTH;
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
@@ -27,14 +27,11 @@ public class ChessGameFrame extends JFrame {
     JLabel currentPlayerError;
     JLabel formatError;
     JLabel timeCounter;
-    JLabel TiShi;
     JPanel upBian;
     public Chessboard chessboard;
     int Counter = 0;
     ImageIcon background = new ImageIcon("./images/3.jpg");
     ImageIcon background2 = new ImageIcon("./images/QQ图片20220525115306.jpg");
-    ImageIcon background3 = new ImageIcon("./images/QQ图片20220528211724.jpg");
-
 
     public JLabel getCurrentPlayerLabel() {
         return CurrentPlayerLabel;
@@ -101,6 +98,10 @@ public class ChessGameFrame extends JFrame {
         add(chessboard);
     }
 
+
+
+
+
     public String[][] getInfoOfChessBoard (ChessComponent[][] chessComponents){
         String[][] chessComponentsForFile = new String[8][8];
         for (int i = 0; i < 8; i++) {
@@ -149,6 +150,7 @@ public class ChessGameFrame extends JFrame {
         return chessComponentsForFile;
     }
 
+
     /**
      * 在游戏面板中添加标签
      */
@@ -171,7 +173,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addChessBoardError() {
         chessBoardError = new JLabel("");
-        chessBoardError.setLocation(HEIGTH, HEIGTH / 12-15);
+        chessBoardError.setLocation(HEIGTH, HEIGTH / 12-5);
         chessBoardError.setSize(200, 60);
         chessBoardError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(chessBoardError);
@@ -179,7 +181,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addChessError() {
         chessError = new JLabel("");
-        chessError.setLocation(HEIGTH, HEIGTH / 12-30);
+        chessError.setLocation(HEIGTH, HEIGTH / 12-20);
         chessError.setSize(200, 60);
         chessError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(chessError);
@@ -187,31 +189,41 @@ public class ChessGameFrame extends JFrame {
 
     private void addCurrentPlayerError() {
         currentPlayerError= new JLabel("");
-        currentPlayerError.setLocation(HEIGTH, HEIGTH / 12-45);
+        currentPlayerError.setLocation(HEIGTH, HEIGTH / 12-35);
         currentPlayerError.setSize(200, 60);
         currentPlayerError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(currentPlayerError);
     }
     private void addFormatError() {
         formatError= new JLabel("");
-        formatError.setLocation(HEIGTH, HEIGTH / 12-60);
+        formatError.setLocation(HEIGTH, HEIGTH / 12-50);
         formatError.setSize(200, 60);
         formatError.setFont(new Font("Rockwell", Font.BOLD, 15));
         add(formatError);
     }
     private void addTimeLabel()  {
         timeCounter = new JLabel("With 20s left");
-        timeCounter.setLocation(HEIGTH,HEIGTH/12-75);
+        timeCounter.setLocation(HEIGTH,HEIGTH/12-90);
         timeCounter.setSize(300,100);
         timeCounter.setFont(new Font("Rockwell", Font.BOLD, 20));
         repaint();
         add(timeCounter);
     }
 
+
+
     public void setTimer(int i){
         timeCounter.setText("With "+i + "s left");
         repaint();
     }
+
+
+
+
+
+
+
+
 
     public void addPlayGame(){
 
@@ -219,7 +231,6 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(WIDTH/2-50, HEIGTH / 2);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
         Image image = background2.getImage();
         Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
@@ -259,17 +270,18 @@ public class ChessGameFrame extends JFrame {
             addWinnerLabel();
             addChessboard();
             addRestartButton();
-            addLoadButton();
+            addLoadButton1();
+            addLoadButton2();
             addCloseMusicButton();
             addFileButton();
             addTimeLabel();
             addFormatError();
             addLeaderBoardButton();
             addChessError();
+            addUpBian();
             addChessBoardError();
             addCurrentPlayerError();
             addHuiQiButton();
-            addUpBian();
             addBackground();
             button.setVisible(false);
             repaint();
@@ -283,7 +295,6 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(0,0);
         button.setSize(200,60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -292,6 +303,8 @@ public class ChessGameFrame extends JFrame {
             int musicOpenLab = -1;
         });
     }
+
+
 
     /**
      * 添加背景图片
@@ -306,10 +319,11 @@ public class ChessGameFrame extends JFrame {
         add(jlabel);
     }
 
+
+
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
-    //兵升变
     private void addUpBian() {
         JPanel upBian = new JPanel();
         upBian.setLayout(new GridLayout(2,2,10,10 ));
@@ -320,7 +334,6 @@ public class ChessGameFrame extends JFrame {
 
         upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
         upBian.setSize(250,120);
-        upBian.setBackground(new Color(165,34,101));
         upBian.add(chooseQueen);
         upBian.add(chooseBishop);
         upBian.add(chooseKnight);
@@ -328,31 +341,12 @@ public class ChessGameFrame extends JFrame {
         add(upBian);
         setVisible(true);
 
-        chooseRook.addActionListener(e -> {
-            chessboard.ChangeRook();
-            WinnerLabel.setText("");
-        });
-        chooseQueen.addActionListener(e -> {
-            chessboard.ChangeQueen();
-            WinnerLabel.setText("");
-        });
-        chooseKnight.addActionListener(e -> {
-            chessboard.ChangeKnight();
-            WinnerLabel.setText("");
-        });
-        chooseBishop.addActionListener(e -> {
-            chessboard.ChangeBishop();
-            WinnerLabel.setText("");
-        });
     }
-
-    //重新开始
     private void addRestartButton() {
         JButton button = new JButton("Restart Game!");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -403,13 +397,18 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-    //读档按钮
-    private void addLoadButton() {
-        JButton loadButton = new JButton("Load");
+
+
+
+
+
+
+
+    private void addLoadButton1() {
+        JButton loadButton = new JButton("Load1");
         loadButton.setLocation(HEIGTH, HEIGTH / 10 + 200);
         loadButton.setSize(200, 60);
         loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
-        loadButton.setBackground(new Color(165,34,101));
         add(loadButton);
 
 
@@ -420,7 +419,7 @@ public class ChessGameFrame extends JFrame {
             chooser.setCurrentDirectory(new File("."));
             chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             chooser.setMultiSelectionEnabled(false);
-            chooser.setFileFilter(new FileNameExtensionFilter("txt","txt"));
+            chooser.setFileFilter(new FileNameExtensionFilter("txt","txt","json"));
             int result = chooser.showOpenDialog(getParent());
             if (result == JFileChooser.APPROVE_OPTION){
                 File file = chooser.getSelectedFile();
@@ -429,9 +428,26 @@ public class ChessGameFrame extends JFrame {
                     formatError.setText("Error code : 104");
                 }
             }
+
+
+
         });
     }
-
+    private void addLoadButton2() {
+        JButton loadButton = new JButton("Load2");
+        loadButton.setLocation(HEIGTH, HEIGTH / 10 + 280);
+        loadButton.setSize(200, 60);
+        loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(loadButton);
+        loadButton.addActionListener(e -> {
+            System.out.println("Click load");
+            String path = JOptionPane.showInputDialog(this, "Input Path here");
+            gameController.loadGameFromFile(path);
+            if (!path.contains("txt")){
+                formatError.setText("Error code : 104");
+            }
+        });
+    }
 
     //存档按钮
     private void addFileButton() {
@@ -440,7 +456,6 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -449,7 +464,7 @@ public class ChessGameFrame extends JFrame {
 
             File file = null;
             FileWriter fw = null;
-            file = new File("C:/Users/25460/IdeaProjects/Chess/resource/存档" + Counter + ".txt");
+            file = new File("D:/ChessDemo/resource/存档" + Counter + ".txt");
 
 
             if (!file.exists()){
@@ -482,6 +497,7 @@ public class ChessGameFrame extends JFrame {
 
     //悔棋
     private void addHuiQiButton() {
+
         JButton button = new JButton("Withdraw");
         button.addActionListener(e -> {
             gameController.loadGameFromHuiQi();
@@ -496,9 +512,12 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 440);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
     }
+
+
+
+
 
     private void addLeaderBoardButton() {
         JButton button = new JButton("LeaderBoard");
@@ -507,7 +526,8 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 520);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(new Color(165,34,101));
         add(button);
     }
+
+
 }
