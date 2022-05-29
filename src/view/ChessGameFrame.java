@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
-    private final int WIDTH;
+    private final int WIDTH ;
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
@@ -32,6 +32,8 @@ public class ChessGameFrame extends JFrame {
     int Counter = 0;
     ImageIcon background = new ImageIcon("./images/3.jpg");
     ImageIcon background2 = new ImageIcon("./images/QQ图片20220525115306.jpg");
+    ImageIcon background3 = new ImageIcon("./images/QQ图片20220528211724.jpg");
+
 
     public JLabel getCurrentPlayerLabel() {
         return CurrentPlayerLabel;
@@ -98,10 +100,6 @@ public class ChessGameFrame extends JFrame {
         add(chessboard);
     }
 
-
-
-
-
     public String[][] getInfoOfChessBoard (ChessComponent[][] chessComponents){
         String[][] chessComponentsForFile = new String[8][8];
         for (int i = 0; i < 8; i++) {
@@ -149,7 +147,6 @@ public class ChessGameFrame extends JFrame {
         }
         return chessComponentsForFile;
     }
-
 
     /**
      * 在游戏面板中添加标签
@@ -210,20 +207,10 @@ public class ChessGameFrame extends JFrame {
         add(timeCounter);
     }
 
-
-
     public void setTimer(int i){
         timeCounter.setText("With "+i + "s left");
         repaint();
     }
-
-
-
-
-
-
-
-
 
     public void addPlayGame(){
 
@@ -231,6 +218,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(WIDTH/2-50, HEIGTH / 2);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
         Image image = background2.getImage();
         Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
@@ -270,8 +258,8 @@ public class ChessGameFrame extends JFrame {
             addWinnerLabel();
             addChessboard();
             addRestartButton();
-            addLoadButton1();
-            addLoadButton2();
+            addLoadButton();
+            addSwitchSkin();
             addCloseMusicButton();
             addFileButton();
             addTimeLabel();
@@ -281,6 +269,7 @@ public class ChessGameFrame extends JFrame {
             addChessBoardError();
             addCurrentPlayerError();
             addHuiQiButton();
+            addUpBian();
             addBackground();
             button.setVisible(false);
             repaint();
@@ -294,6 +283,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(0,0);
         button.setSize(200,60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -323,29 +313,44 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
-//    private void addUpBian() {
-//        JPanel upBian = new JPanel();
-//        upBian.setLayout(new GridLayout(2,2,10,10 ));
-//        JButton chooseQueen = new JButton("Queen");
-//        JButton chooseBishop = new JButton("Bishop");
-//        JButton chooseKnight = new JButton("Knight");
-//        JButton chooseRook = new JButton("Rook");
-//
-//        upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
-//        upBian.setSize(250,120);
-//        upBian.add(chooseQueen);
-//        upBian.add(chooseBishop);
-//        upBian.add(chooseKnight);
-//        upBian.add(chooseRook);
-//        add(upBian);
-//        setVisible(true);
-//
-//    }
+    private void addUpBian() {
+        JPanel upBian = new JPanel();
+        upBian.setLayout(new GridLayout(2,2,10,10 ));
+        JButton chooseQueen = new JButton("Queen");
+        JButton chooseBishop = new JButton("Bishop");
+        JButton chooseKnight = new JButton("Knight");
+        JButton chooseRook = new JButton("Rook");
+
+        upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
+        upBian.setSize(250,120);
+        upBian.setBackground(new Color(165,34,101));
+        upBian.add(chooseQueen);
+        upBian.add(chooseBishop);
+        upBian.add(chooseKnight);
+        upBian.add(chooseRook);
+        add(upBian);
+        setVisible(true);
+
+        chooseRook.addActionListener(e -> {
+            chessboard.ChangeRook();
+        });
+        chooseQueen.addActionListener(e -> {
+            chessboard.ChangeQueen();
+        });
+        chooseKnight.addActionListener(e -> {
+            chessboard.ChangeKnight();
+        });
+        chooseBishop.addActionListener(e -> {
+            chessboard.ChangeBishop();
+        });
+    }
+    //重新开始
     private void addRestartButton() {
         JButton button = new JButton("Restart Game!");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -396,18 +401,13 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-
-
-
-
-
-
-
-    private void addLoadButton1() {
-        JButton loadButton = new JButton("Load1");
+    //读档按钮
+    private void addLoadButton() {
+        JButton loadButton = new JButton("Load");
         loadButton.setLocation(HEIGTH, HEIGTH / 10 + 200);
         loadButton.setSize(200, 60);
         loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        loadButton.setBackground(new Color(165,34,101));
         add(loadButton);
 
 
@@ -432,19 +432,42 @@ public class ChessGameFrame extends JFrame {
 
         });
     }
-    private void addLoadButton2() {
-        JButton loadButton = new JButton("Load2");
+
+    //切换皮肤
+    private void addSwitchSkin() {
+        JButton loadButton = new JButton("Switch the skin");
         loadButton.setLocation(HEIGTH, HEIGTH / 10 + 280);
         loadButton.setSize(200, 60);
         loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        loadButton.setBackground(new Color(165,34,101));
         add(loadButton);
+
+        Image image = background3.getImage();
+        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
+        ImageIcon backgrounds = new ImageIcon(smallImage);
+        JLabel jlabel = new JLabel(backgrounds);
+        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
+
         loadButton.addActionListener(e -> {
-            System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            gameController.loadGameFromFile(path);
-            if (!path.contains("txt")){
-                formatError.setText("Error code : 104");
-            }
+            repaint();
+
+            addCurrentPlayerLabel();
+            addWinnerLabel();
+            addChessboard();
+            addRestartButton();
+            addLoadButton();
+            addSwitchSkin();
+            addCloseMusicButton();
+            addFileButton();
+            addTimeLabel();
+            addFormatError();
+            addLeaderBoardButton();
+            addChessError();
+            addChessBoardError();
+            addCurrentPlayerError();
+            addHuiQiButton();
+            add(jlabel);
+            repaint();
         });
     }
 
@@ -455,6 +478,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -463,7 +487,7 @@ public class ChessGameFrame extends JFrame {
 
             File file = null;
             FileWriter fw = null;
-            file = new File("D:/ChessDemo/resource/存档" + Counter + ".txt");
+            file = new File("C:/Users/25460/IdeaProjects/Chess/resource/存档" + Counter + ".txt");
 
 
             if (!file.exists()){
@@ -496,7 +520,6 @@ public class ChessGameFrame extends JFrame {
 
     //悔棋
     private void addHuiQiButton() {
-
         JButton button = new JButton("Withdraw");
         button.addActionListener(e -> {
             gameController.loadGameFromHuiQi();
@@ -511,12 +534,9 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 440);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
     }
-
-
-
-
 
     private void addLeaderBoardButton() {
         JButton button = new JButton("LeaderBoard");
@@ -525,8 +545,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 520);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
     }
-
-
 }
