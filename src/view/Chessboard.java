@@ -43,6 +43,8 @@ public class Chessboard extends JComponent {
     private JLabel chessError;
     private JLabel currentPlayerError;
     private JLabel timeCounter;
+
+
     public static ArrayList<ChessComponent[][]> HuiQi = new ArrayList<>();
 
     public void setChessBoardError(JLabel chessBoardError) {
@@ -205,6 +207,20 @@ public class Chessboard extends JComponent {
         TimeCounter.time = 20;
 
         Click pilipala = new Click();
+        for (int i = 0; i < 8; i++) {
+            if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.BLACK){
+                WinnerLabel.setText("Change the Pawn");
+            }
+            if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.WHITE){
+                WinnerLabel.setText("Change the Pawn");
+            }
+            if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.WHITE){
+                WinnerLabel.setText("Change the Pawn");
+            }
+            if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.BLACK){
+                WinnerLabel.setText("Change the Pawn");
+            }
+        }
     }
 
 

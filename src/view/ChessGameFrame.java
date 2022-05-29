@@ -27,6 +27,7 @@ public class ChessGameFrame extends JFrame {
     JLabel currentPlayerError;
     JLabel formatError;
     JLabel timeCounter;
+    JLabel TiShi;
     JPanel upBian;
     public Chessboard chessboard;
     int Counter = 0;
@@ -293,8 +294,6 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-
-
     /**
      * 添加背景图片
      */
@@ -307,8 +306,6 @@ public class ChessGameFrame extends JFrame {
         jlabel.setBounds(0, 0, WIDTH, HEIGTH);
         add(jlabel);
     }
-
-
 
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
@@ -344,6 +341,7 @@ public class ChessGameFrame extends JFrame {
             chessboard.ChangeBishop();
         });
     }
+
     //重新开始
     private void addRestartButton() {
         JButton button = new JButton("Restart Game!");
