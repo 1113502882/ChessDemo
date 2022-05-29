@@ -73,13 +73,13 @@ public class PawnChessComponent extends ChessComponent {
             //走1步或2步
             if (destination.getY() == source.getY() && (destination.getX() == 2 || destination.getX() == 3)) {
 
-                //判断是否被堵
-                for (int row = source.getX() + 1; row < destination.getX(); row++) {
-                    if (!(chessComponents[row][source.getY()] instanceof EmptySlotComponent)) {
-                        return false;
-                    }
+                if (destination.getX()-source.getX() == 1 && chessComponents[destination.getX()][destination.getY()]instanceof EmptySlotComponent){
+                    return true;
                 }
-                return true;
+                if (destination.getX()-source.getX() == 2 && chessComponents[destination.getX()][destination.getY()]instanceof EmptySlotComponent&&chessComponents[destination.getX()-1][destination.getY()]instanceof EmptySlotComponent){
+                    return true;
+                }
+                return false;
             }
             return destination.getX() == 2 && Math.abs(destination.getY() - source.getY()) == 1&& chessComponents[destination.getX()][destination.getY()].getChessColor()==ChessColor.WHITE;
         } else
@@ -92,9 +92,7 @@ public class PawnChessComponent extends ChessComponent {
                 }
                 return destination.getX() - source.getX() == 1 && Math.abs(destination.getY() - source.getY()) == 1 && chessComponents[destination.getX()][destination.getY()].getChessColor()==ChessColor.WHITE;
             }
-            if (source.getX() == 7){
-                blackUp = true;
-            }
+
 
 
         //选取白兵且初始位置
@@ -102,14 +100,13 @@ public class PawnChessComponent extends ChessComponent {
 
             //走1或2步
             if (destination.getY() == source.getY() && (destination.getX() - source.getX() == -1 || destination.getX() - source.getX() == -2)) {
-
-                //判断是否被堵
-                for (int row = source.getX() - 1; row > destination.getX(); row--) {
-                    if (!(chessComponents[row][source.getY()] instanceof EmptySlotComponent)) {
-                        return false;
-                    }
+                if (destination.getX()-source.getX() == -1 && chessComponents[destination.getX()][destination.getY()]instanceof EmptySlotComponent){
+                    return true;
                 }
-                return true;
+                if (destination.getX()-source.getX() == -2 && chessComponents[destination.getX()][destination.getY()]instanceof EmptySlotComponent&&chessComponents[destination.getX()+1][destination.getY()]instanceof EmptySlotComponent){
+                    return true;
+                }
+                return false;
             }
             return destination.getX() - source.getX() == -1 && Math.abs(destination.getY() - source.getY()) == 1 && chessComponents[destination.getX()][destination.getY()].getChessColor()==ChessColor.BLACK;
 
@@ -123,9 +120,6 @@ public class PawnChessComponent extends ChessComponent {
             }
             return destination.getX() - source.getX() == -1 && Math.abs(destination.getY() - source.getY()) == 1 && chessComponents[destination.getX()][destination.getY()].getChessColor() == ChessColor.BLACK;
         }
-            if (source.getX() == 0){
-                whiteUp = true;
-            }
 
 
         return false;
