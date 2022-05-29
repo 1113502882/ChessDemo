@@ -26,7 +26,7 @@ public class ChessGameFrame extends JFrame {
     JLabel chessError;
     JLabel currentPlayerError;
     JLabel formatError;
-    JLabel timeCounter;
+    public  static JLabel timeCounter = new JLabel("With 20s left");
     JPanel upBian;
     public Chessboard chessboard;
     int Counter = 0;
@@ -202,7 +202,7 @@ public class ChessGameFrame extends JFrame {
         add(formatError);
     }
     private void addTimeLabel()  {
-        timeCounter = new JLabel("With 20s left");
+
         timeCounter.setLocation(HEIGTH,HEIGTH/12-90);
         timeCounter.setSize(300,100);
         timeCounter.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -419,6 +419,12 @@ public class ChessGameFrame extends JFrame {
             WinnerLabel.setText("");
             gameController.getChessboard().setGameOver(false);
             gameController.getChessboard().repaint();
+            chessBoardError.setText("");
+            chessError.setText("");
+            currentPlayerError.setText("");
+            formatError.setText("");
+            timeCounter.setText("With 20s left");
+            repaint();
         });
     }
 
@@ -449,10 +455,11 @@ public class ChessGameFrame extends JFrame {
             int result = chooser.showOpenDialog(getParent());
             if (result == JFileChooser.APPROVE_OPTION){
                 File file = chooser.getSelectedFile();
-                gameController.loadGameFromFile(file.getAbsolutePath());
                 if (!file.getAbsoluteFile().getName().contains("txt")){
                     formatError.setText("Error code : 104");
                 }
+                gameController.loadGameFromFile(file.getAbsolutePath());
+
             }
 
 
