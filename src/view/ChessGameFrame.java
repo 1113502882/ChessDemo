@@ -260,7 +260,6 @@ public class ChessGameFrame extends JFrame {
             addChessboard();
             addRestartButton();
             addLoadButton();
-            addSwitchSkin();
             addCloseMusicButton();
             addFileButton();
             addTimeLabel();
@@ -310,6 +309,7 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
+    //兵升变
     private void addUpBian() {
         JPanel upBian = new JPanel();
         upBian.setLayout(new GridLayout(2,2,10,10 ));
@@ -330,15 +330,19 @@ public class ChessGameFrame extends JFrame {
 
         chooseRook.addActionListener(e -> {
             chessboard.ChangeRook();
+            WinnerLabel.setText("");
         });
         chooseQueen.addActionListener(e -> {
             chessboard.ChangeQueen();
+            WinnerLabel.setText("");
         });
         chooseKnight.addActionListener(e -> {
             chessboard.ChangeKnight();
+            WinnerLabel.setText("");
         });
         chooseBishop.addActionListener(e -> {
             chessboard.ChangeBishop();
+            WinnerLabel.setText("");
         });
     }
 
@@ -425,49 +429,9 @@ public class ChessGameFrame extends JFrame {
                     formatError.setText("Error code : 104");
                 }
             }
-
-
-
         });
     }
 
-    //切换皮肤
-    private void addSwitchSkin() {
-        JButton loadButton = new JButton("Switch the skin");
-        loadButton.setLocation(HEIGTH, HEIGTH / 10 + 280);
-        loadButton.setSize(200, 60);
-        loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
-        loadButton.setBackground(new Color(165,34,101));
-        add(loadButton);
-
-        Image image = background3.getImage();
-        Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
-        ImageIcon backgrounds = new ImageIcon(smallImage);
-        JLabel jlabel = new JLabel(backgrounds);
-        jlabel.setBounds(0, 0, WIDTH, HEIGTH);
-
-        loadButton.addActionListener(e -> {
-            repaint();
-
-            addCurrentPlayerLabel();
-            addWinnerLabel();
-            addChessboard();
-            addRestartButton();
-            addLoadButton();
-            addSwitchSkin();
-            addCloseMusicButton();
-            addFileButton();
-            addTimeLabel();
-            addFormatError();
-            addLeaderBoardButton();
-            addChessError();
-            addChessBoardError();
-            addCurrentPlayerError();
-            addHuiQiButton();
-            add(jlabel);
-            repaint();
-        });
-    }
 
     //存档按钮
     private void addFileButton() {

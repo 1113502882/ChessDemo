@@ -2,6 +2,8 @@ package controller;
 
 
 import model.ChessComponent;
+import model.KingChessComponent;
+import model.RookChessComponent;
 import view.Chessboard;
 
 public class ClickController {
@@ -27,6 +29,11 @@ public class ClickController {
             } else if (handleSecond(chessComponent)) {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, chessComponent);
+                chessboard.swapColor();
+                first.setSelected(false);
+                first = null;
+            }else if (first instanceof KingChessComponent && chessComponent instanceof RookChessComponent) {//王车易位
+                chessboard.swapQueenRook(first, chessComponent);
                 chessboard.swapColor();
                 first.setSelected(false);
                 first = null;
