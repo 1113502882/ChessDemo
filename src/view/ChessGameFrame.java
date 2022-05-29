@@ -231,6 +231,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(WIDTH/2-50, HEIGTH / 2);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
         Image image = background2.getImage();
         Image smallImage = image.getScaledInstance(WIDTH, HEIGTH, Image.SCALE_FAST);
@@ -241,25 +242,25 @@ public class ChessGameFrame extends JFrame {
         add(jlabel);
 
         button.addActionListener(e -> {
-//            String id = JOptionPane.showInputDialog(this, "Input your id here");
-//            String key = JOptionPane.showInputDialog(this, "Input your key here");
-//            if (id.equals(player1.getId())  && key.equals(player1.getKey())){
-//                JOptionPane.showMessageDialog(this,"Success!");
-//                player1.setPoints(player1.getPoints()+1);
-//                setVisible(true);
-//            }else  if (id.equals(player2.getId()) && key.equals(player2.getKey())){
-//                JOptionPane.showMessageDialog(this,"Success!");
-//                player2.setPoints(player2.getPoints()+1);
-//                setVisible(true);
-//            }else if (id.equals(player3.getId()) && key.equals(player3.getKey())){
-//                JOptionPane.showMessageDialog(this,"Success!");
-//                player3.setPoints(player3.getPoints()+1);
-//                setVisible(true);
-//            }
-//            else {
-//                JOptionPane.showMessageDialog(this,"Wrong account or key !");
-//                setVisible(false);
-//            }
+            String id = JOptionPane.showInputDialog(this, "Input your id here");
+            String key = JOptionPane.showInputDialog(this, "Input your key here");
+            if (id.equals(player1.getId())  && key.equals(player1.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                player1.setPoints(player1.getPoints()+1);
+                setVisible(true);
+            }else  if (id.equals(player2.getId()) && key.equals(player2.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                player2.setPoints(player2.getPoints()+1);
+                setVisible(true);
+            }else if (id.equals(player3.getId()) && key.equals(player3.getKey())){
+                JOptionPane.showMessageDialog(this,"Success!");
+                player3.setPoints(player3.getPoints()+1);
+                setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this,"Wrong account or key !");
+                setVisible(false);
+            }
 
             jlabel.setVisible(false);
             Music.audioPlayWave.start();
@@ -271,7 +272,6 @@ public class ChessGameFrame extends JFrame {
             addChessboard();
             addRestartButton();
             addLoadButton1();
-            addLoadButton2();
             addCloseMusicButton();
             addFileButton();
             addTimeLabel();
@@ -295,6 +295,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(0,0);
         button.setSize(200,60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -331,9 +332,15 @@ public class ChessGameFrame extends JFrame {
         JButton chooseBishop = new JButton("Bishop");
         JButton chooseKnight = new JButton("Knight");
         JButton chooseRook = new JButton("Rook");
+        chooseBishop.setBackground(new Color(165,34,101));
+        chooseKnight.setBackground(new Color(165,34,101));
+        chooseRook.setBackground(new Color(165,34,101));
+        chooseQueen.setBackground(new Color(165,34,101));
+
 
         upBian.setLocation(HEIGTH+250,HEIGTH/10+60);
         upBian.setSize(250,120);
+        upBian.setBackground(new Color(165,34,101));
         upBian.add(chooseQueen);
         upBian.add(chooseBishop);
         upBian.add(chooseKnight);
@@ -341,12 +348,30 @@ public class ChessGameFrame extends JFrame {
         add(upBian);
         setVisible(true);
 
+        chooseRook.addActionListener(e -> {
+            chessboard.ChangeRook();
+            WinnerLabel.setText("");
+        });
+        chooseQueen.addActionListener(e -> {
+            chessboard.ChangeQueen();
+            WinnerLabel.setText("");
+        });
+        chooseKnight.addActionListener(e -> {
+            chessboard.ChangeKnight();
+            WinnerLabel.setText("");
+        });
+        chooseBishop.addActionListener(e -> {
+            chessboard.ChangeBishop();
+            WinnerLabel.setText("");
+        });
     }
+
     private void addRestartButton() {
         JButton button = new JButton("Restart Game!");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -409,6 +434,7 @@ public class ChessGameFrame extends JFrame {
         loadButton.setLocation(HEIGTH, HEIGTH / 10 + 200);
         loadButton.setSize(200, 60);
         loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        loadButton.setBackground(new Color(165,34,101));
         add(loadButton);
 
 
@@ -433,21 +459,6 @@ public class ChessGameFrame extends JFrame {
 
         });
     }
-    private void addLoadButton2() {
-        JButton loadButton = new JButton("Load2");
-        loadButton.setLocation(HEIGTH, HEIGTH / 10 + 280);
-        loadButton.setSize(200, 60);
-        loadButton.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(loadButton);
-        loadButton.addActionListener(e -> {
-            System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            gameController.loadGameFromFile(path);
-            if (!path.contains("txt")){
-                formatError.setText("Error code : 104");
-            }
-        });
-    }
 
     //存档按钮
     private void addFileButton() {
@@ -456,6 +467,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
 
         button.addActionListener(e -> {
@@ -499,6 +511,7 @@ public class ChessGameFrame extends JFrame {
     private void addHuiQiButton() {
 
         JButton button = new JButton("Withdraw");
+        button.setBackground(new Color(165,34,101));
         button.addActionListener(e -> {
             gameController.loadGameFromHuiQi();
             Chessboard.HuiQi.remove(Chessboard.HuiQi.size()-1);
@@ -523,9 +536,10 @@ public class ChessGameFrame extends JFrame {
         JButton button = new JButton("LeaderBoard");
         String LeaderBoard = player3.getId()+": " + player3.getPoints() +"\n" + player2.getId()+": " + player2.getPoints() +"\n"+ player1.getId()+": "+player1.getPoints();
         button.addActionListener((e) -> JOptionPane.showMessageDialog(this, LeaderBoard));
-        button.setLocation(HEIGTH, HEIGTH / 10 + 520);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 280);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setBackground(new Color(165,34,101));
         add(button);
     }
 
