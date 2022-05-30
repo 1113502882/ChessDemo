@@ -43,7 +43,9 @@ public class Chessboard extends JComponent {
     private JLabel chessError;
     private JLabel currentPlayerError;
     private JLabel timeCounter;
-    public static ArrayList<ChessComponent[][]> HuiQi  = new ArrayList<>();
+
+
+    public static ArrayList<ChessComponent[][]> HuiQi = new ArrayList<>();
 
     public void setChessBoardError(JLabel chessBoardError) {
         this.chessBoardError = chessBoardError;
@@ -156,6 +158,89 @@ public class Chessboard extends JComponent {
     }
 
 
+
+    public ChessComponent[][] getChessComponents() {
+        return chessComponents;
+    }
+
+    public ChessColor getCurrentColor() {
+        return currentColor;
+    }
+
+    public void putChessOnBoard(ChessComponent chessComponent) {
+        int row = chessComponent.getChessboardPoint().getX(), col = chessComponent.getChessboardPoint().getY();
+
+        if (chessComponents[row][col] != null) {
+            remove(chessComponents[row][col]);
+        }
+        add(chessComponents[row][col] = chessComponent);
+    }
+
+
+    public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
+        // Note that chess1 has higher priority, 'destroys' chess2 if exists.
+
+        if (!(chess2 instanceof EmptySlotComponent)) {
+            if (chess2 instanceof KingChessComponent && chess2.getChessColor() == ChessColor.BLACK) {
+                WinnerLabel.setText("Whiter player win");
+                GameOver = true;
+            }
+            if (chess2 instanceof KingChessComponent && chess2.getChessColor() == ChessColor.WHITE) {
+                WinnerLabel.setText("Black player win");
+                GameOver = true;
+            }
+            remove(chess2);
+            add(chess2 = new EmptySlotComponent(chess2.getChessboardPoint(), chess2.getLocation(), clickController, CHESS_SIZE));
+        }
+        chess1.swapLocation(chess2);
+        int row1 = chess1.getChessboardPoint().getX(), col1 = chess1.getChessboardPoint().getY();
+        chessComponents[row1][col1] = chess1;
+        int row2 = chess2.getChessboardPoint().getX(), col2 = chess2.getChessboardPoint().getY();
+        chessComponents[row2][col2] = chess2;
+
+
+        chess1.repaint();
+        chess2.repaint();
+    }
+
+
+    public static int Counter1 = 0;
+
+    public void setCurrentColor(ChessColor currentColor) {
+        this.currentColor = currentColor;
+    }
+
+    //更新当前行棋方
+    public void swapColor() {
+
+        currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
+        CurrentPlayerLabel.setText("Current Player:" + currentColor.toString());
+        ChessComponent[][] temp = new ChessComponent[chessComponents.length][chessComponents[0].length];
+        for (int i = 0; i < chessComponents.length; i++) {
+            for (int j = 0; j < chessComponents[0].length; j++) {
+                temp[i][j] = chessComponents[i][j];
+            }
+        }
+        if (!HuiQi.contains(temp)) {
+            HuiQi.add(temp);
+        }
+        TimeCounter.time = 20;
+
+        Click pilipala = new Click();
+        for (int i = 0; i < 8; i++) {
+            if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.BLACK){
+                WinnerLabel.setText("Change the Pawn");
+            }else if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.WHITE){
+                WinnerLabel.setText("Change the Pawn");
+            }else if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.WHITE){
+                WinnerLabel.setText("Change the Pawn");
+            }else if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.BLACK){
+                WinnerLabel.setText("Change the Pawn");
+            }
+        }
+    }
+
+
     public void ChangeRook(){
         for (int i = 0; i < 8; i++) {
             if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.BLACK){
@@ -221,152 +306,63 @@ public class Chessboard extends JComponent {
         }
     }
 
-
-
-    public ChessComponent[][] getChessComponents() {
-        return chessComponents;
-    }
-
-    public ChessColor getCurrentColor() {
-        return currentColor;
-    }
-
-    public void putChessOnBoard(ChessComponent chessComponent) {
-        int row = chessComponent.getChessboardPoint().getX(), col = chessComponent.getChessboardPoint().getY();
-
-        if (chessComponents[row][col] != null) {
-            remove(chessComponents[row][col]);
-        }
-        add(chessComponents[row][col] = chessComponent);
-    }
-
-
-    public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
-        // Note that chess1 has higher priority, 'destroys' chess2 if exists.
-
-        if (!(chess2 instanceof EmptySlotComponent)) {
-            if (chess2 instanceof KingChessComponent && chess2.getChessColor() == ChessColor.BLACK) {
-                WinnerLabel.setText("Whiter player win");
-                GameOver = true;
-            }
-            if (chess2 instanceof KingChessComponent && chess2.getChessColor() == ChessColor.WHITE) {
-                WinnerLabel.setText("Black player win");
-                GameOver = true;
-            }
-            remove(chess2);
-            add(chess2 = new EmptySlotComponent(chess2.getChessboardPoint(), chess2.getLocation(), clickController, CHESS_SIZE));
-        }
-        chess1.swapLocation(chess2);
-        int row1 = chess1.getChessboardPoint().getX(), col1 = chess1.getChessboardPoint().getY();
-        chessComponents[row1][col1] = chess1;
-        int row2 = chess2.getChessboardPoint().getX(), col2 = chess2.getChessboardPoint().getY();
-        chessComponents[row2][col2] = chess2;
-
-
-
-
-
-        chess1.repaint();
-        chess2.repaint();
-    }
-
-
-
-    public static int Counter1 = 0;
-
-    public void setCurrentColor(ChessColor currentColor) {
-        this.currentColor = currentColor;
-    }
-
-    //更新当前行棋方
-    public void swapColor() {
-
-        currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
-        CurrentPlayerLabel.setText("Current Player:" + currentColor.toString());
-        ChessComponent[][] temp = new ChessComponent[chessComponents.length][chessComponents[0].length];
-        for (int i = 0; i < chessComponents.length; i++) {
-            for (int j = 0; j <chessComponents[0].length ; j++) {
-                temp[i][j] = chessComponents[i][j];
-            }
-        }
-        if (!HuiQi.contains(temp)){
-            HuiQi.add(temp);
-        }
-        TimeCounter.time = 20;
-
-        Click pilipala = new Click();
-        for (int i = 0; i < 8; i++) {
-            if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.BLACK){
-                WinnerLabel.setText("Change the Pawn");
-            }else if (chessComponents[0][i]instanceof PawnChessComponent&&chessComponents[0][i].getChessColor() == ChessColor.WHITE){
-                WinnerLabel.setText("Change the Pawn");
-            }else if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.WHITE){
-                WinnerLabel.setText("Change the Pawn");
-            }else if (chessComponents[7][i]instanceof PawnChessComponent&&chessComponents[7][i].getChessColor() == ChessColor.BLACK){
-                WinnerLabel.setText("Change the Pawn");
-            }
-        }
-
-    }
-
-
-    public List<String> getInfoOfChessBoard (ChessComponent[][] chessComponents){
+    public List<String> getInfoOfChessBoard(ChessComponent[][] chessComponents) {
 
         String[] chessComponentsForFile = new String[9];
-        for (int i = 0; i <9 ; i++) {
-            chessComponentsForFile[i]="";
+        for (int i = 0; i < 9; i++) {
+            chessComponentsForFile[i] = "";
         }
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"K";
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "K";
                 }
-                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"Q";
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "Q";
                 }
-                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"B";
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "B";
                 }
-                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"P";
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "P";
                 }
-                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"N";
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "N";
                 }
-                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"R";
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "R";
                 }
-                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"r";
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "r";
                 }
-                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"k";
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "k";
                 }
-                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"q";
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "q";
                 }
-                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"b";
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "b";
                 }
-                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"p";
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "p";
                 }
-                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"n";
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "n";
                 }
-                if (chessComponents[i][j] instanceof EmptySlotComponent){
-                    chessComponentsForFile[i] = chessComponentsForFile[i]+"0";
+                if (chessComponents[i][j] instanceof EmptySlotComponent) {
+                    chessComponentsForFile[i] = chessComponentsForFile[i] + "0";
                 }
             }
 
         }
-        if (currentColor == ChessColor.BLACK){
-            chessComponentsForFile[8] = chessComponentsForFile[8]+"b";
-        }else {
-            chessComponentsForFile[8] = chessComponentsForFile[8]+"w";
+        if (currentColor == ChessColor.BLACK) {
+            chessComponentsForFile[8] = chessComponentsForFile[8] + "b";
+        } else {
+            chessComponentsForFile[8] = chessComponentsForFile[8] + "w";
         }
         List<String> ans = new ArrayList<>();
-        for (int i = 0; i <9 ; i++) {
+        for (int i = 0; i < 9; i++) {
             ans.add(chessComponentsForFile[i]);
         }
 
@@ -374,28 +370,9 @@ public class Chessboard extends JComponent {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//已完成部分-----------------------------------------------------------------------------------------------------
+    //已完成部分-----------------------------------------------------------------------------------------------------
     //一堆初始化
-void initRookOnBoard(int row, int col, ChessColor color) {
+    void initRookOnBoard(int row, int col, ChessColor color) {
         ChessComponent chessComponent = new RookChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
@@ -431,6 +408,7 @@ void initRookOnBoard(int row, int col, ChessColor color) {
         chessComponent.setVisible(true);
         putChessOnBoard(chessComponent);
     }
+
     public void initiateEmptyChessboard() {
         for (int i = 0; i < chessComponents.length; i++) {
             for (int j = 0; j < chessComponents[i].length; j++) {
@@ -444,7 +422,6 @@ void initRookOnBoard(int row, int col, ChessColor color) {
         super.paintComponent(g);
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
-
 
     private Point calculatePoint(int row, int col) {
         return new Point(col * CHESS_SIZE, row * CHESS_SIZE);
@@ -488,11 +465,11 @@ void initRookOnBoard(int row, int col, ChessColor color) {
         repaint();
 
 
-        if (chessData.get(chessData.size()-1).charAt(0) != 'w' && chessData.get(chessData.size()-1).charAt(0) != 'b'){
+        if (chessData.get(chessData.size() - 1).charAt(0) != 'w' && chessData.get(chessData.size() - 1).charAt(0) != 'b') {
             currentPlayerError.setText("Error code : 103");
 
-            for (int i = 0; i <chessData.size() ; i++) {
-                if (chessData.size() !=8 || chessData.get(i).length()!=8){
+            for (int i = 0; i < chessData.size(); i++) {
+                if (chessData.size() != 8 || chessData.get(i).length() != 8) {
                     chessBoardError.setText("Error code : 101");
 
                 }
@@ -523,23 +500,23 @@ void initRookOnBoard(int row, int col, ChessColor color) {
 
                     } else if (chessData.get(i).charAt(j) == 'b') {
 
-                    } else if (chessData.get(i).charAt(j)== '0'){
+                    } else if (chessData.get(i).charAt(j) == '0') {
 
-                    }else{
+                    } else {
                         chessError.setText("Error code : 102");
 
                     }
                 }
             }
 
-        }else {
-            for (int i = 0; i <chessData.size()-1 ; i++) {
-                if (chessData.size()-1 !=8 || chessData.get(i).length()!=8){
+        } else {
+            for (int i = 0; i < chessData.size() - 1; i++) {
+                if (chessData.size() - 1 != 8 || chessData.get(i).length() != 8) {
                     chessBoardError.setText("Error code : 101");
 
                 }
             }
-            for (int i = 0; i < chessData.size()-1; i++) {
+            for (int i = 0; i < chessData.size() - 1; i++) {
                 for (int j = 0; j < chessData.get(i).length(); j++) {
                     if (chessData.get(i).charAt(j) == 'P') {
 
@@ -565,23 +542,23 @@ void initRookOnBoard(int row, int col, ChessColor color) {
 
                     } else if (chessData.get(i).charAt(j) == 'b') {
 
-                    } else if (chessData.get(i).charAt(j) == '0'){
+                    } else if (chessData.get(i).charAt(j) == '0') {
 
-                    }else{
+                    } else {
                         chessError.setText("Error code : 102");
 
                     }
                 }
             }
         }
-        if (chessData.get(8).charAt(0)=='b'){
-            currentColor=ChessColor.BLACK;
-            CurrentPlayerLabel.setText("Current Player: BLACK" );
+        if (chessData.get(8).charAt(0) == 'b') {
+            currentColor = ChessColor.BLACK;
+            CurrentPlayerLabel.setText("Current Player: BLACK");
             repaint();
         }
-        if (chessData.get(8).charAt(0)=='w'){
-            currentColor=ChessColor.WHITE;
-            CurrentPlayerLabel.setText("Current Player: WHITE" );
+        if (chessData.get(8).charAt(0) == 'w') {
+            currentColor = ChessColor.WHITE;
+            CurrentPlayerLabel.setText("Current Player: WHITE");
             repaint();
         }
     }
